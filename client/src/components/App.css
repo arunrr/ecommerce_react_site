@@ -8,6 +8,11 @@ a,
 a:link,
 a:visited {
   text-decoration: none;
+  color: rgb(83, 64, 28);
+}
+
+a:hover {
+  color: rgb(196, 129, 5);
 }
 
 .active {
