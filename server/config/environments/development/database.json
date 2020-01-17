@@ -1,0 +1,19 @@
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "connector": "strapi-hook-mongoose",
+      "settings": {
+        "client": "mongo",
+        "host": "ds133017.mlab.com",
+        "port": "33017",
+        "database": "brew-server",
+        "username": "arunrr",
+        "password": "admin007"
+      },
+      "options": {
+        "authenticationDatabase": "brew-server"
+      }
+    }
+  }
+}
