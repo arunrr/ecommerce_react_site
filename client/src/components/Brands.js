@@ -4,11 +4,12 @@ import { Box, Image, Text, Card } from 'gestalt';
 
 export default function Brands({ image, title, desc, url }) {
   return (
-    <Box margin={1} width={200}>
+    <Box paddingY={4} margin={1} width={200}>
       <Card
         image={
           <Box width={200} height={200}>
             <Image
+              fit="cover"
               alt="Brand image"
               naturalWidth={1}
               naturalHeight={1}
@@ -23,8 +24,12 @@ export default function Brands({ image, title, desc, url }) {
           alignItems="center"
           justifyContent="center"
         >
-          <Text size="xl">{title}</Text>
-          <Text>{desc}</Text>
+          <Box marginBottom={2}>
+            <Text size="xl">{title}</Text>
+          </Box>
+          <Box marginBottom={1}>
+            <Text>{desc}</Text>
+          </Box>
           <Text>
             <Link to={url}>See brews</Link>
           </Text>
