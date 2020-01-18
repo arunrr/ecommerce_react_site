@@ -8,6 +8,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import LogOut from './components/LogOut';
 import * as serviceWorker from './serviceWorker';
+import Brews from './components/BrewsList';
 
 const Root = () => {
   return (
@@ -18,6 +19,7 @@ const Root = () => {
         <Route component={SignUp} path="/signup" />
         <Route component={SignIn} path="/signin" />
         <Route component={LogOut} path="/logout" />
+        <Route component={Brews} path="/:brandid" />
       </Switch>
     </Router>
   );
