@@ -5,13 +5,19 @@ import Strapi from 'strapi-sdk-javascript/build/main';
 import './App.css';
 
 import Brands from './Brands';
+import SearchBox from './SearchBox';
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 class App extends Component {
   state = {
-    brands: []
+    brands: [],
+    searchTerm: ''
+  };
+
+  handleChange = event => {
+    this.setState({ searchTerm: event.value });
   };
 
   async componentDidMount() {
@@ -43,6 +49,9 @@ class App extends Component {
   }
 
   render() {
+    const filteredBrands = this.state.brands.filter(brand =>
+      brand.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    );
     return (
       <Container>
         {/* Brands Section */}
@@ -52,8 +61,11 @@ class App extends Component {
             Brew Brands
           </Heading>
         </Box>
+        {/* Search box Section */}
+        <SearchBox onChange={this.handleChange} />
+        {/* Display Brands Section */}
         <Box wrap display="flex" justifyContent="around">
-          {this.state.brands.map(brand => (
+          {filteredBrands.map(brand => (
             <Brands
               key={brand._id}
               image={`${apiUrl}${brand.image.url}`}
