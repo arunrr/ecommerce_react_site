@@ -64,7 +64,7 @@ export default class BrandsList extends Component {
           </Heading>
         </Box>
         {/* Search box Section */}
-        <SearchBox onChange={this.handleChange} />
+        <SearchBox onChange={this.handleChange} holder="Brands" />
         {/* Display Brands Section */}
         <Box wrap display="flex" justifyContent="around">
           {filteredBrands.map(brand => (

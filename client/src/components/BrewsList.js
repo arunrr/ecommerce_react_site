@@ -66,7 +66,7 @@ export default class BrewsList extends Component {
           </Heading>
         </Box>
         {/* Search box Section */}
-        <SearchBox onChange={this.handleChange} />
+        <SearchBox onChange={this.handleChange} holder="Brews" />
         {/* Loader Section */}
         <Loader loading={this.state.loading} />
         {/* Brew list section */}
