@@ -4,7 +4,17 @@ import { Box, Image, Text, Card } from 'gestalt';
 
 export default function Brands({ image, title, desc, url }) {
   return (
-    <Box padding={5} margin={1} width={250}>
+    <Box
+      padding={5}
+      margin={1}
+      width={250}
+      shape="rounded"
+      dangerouslySetInlineStyle={{
+        __style: {
+          backgroundColor: '#DBFFDB'
+        }
+      }}
+    >
       <Card
         image={
           <Box width={200} height={200}>
@@ -31,7 +41,19 @@ export default function Brands({ image, title, desc, url }) {
             <Text>{desc}</Text>
           </Box>
           <Text>
-            <Link to={url}>See brews</Link>
+            <Link to={url}>
+              <Box
+                color="darkGray"
+                shape="pill"
+                paddingY={2}
+                paddingX={4}
+                marginTop={2}
+              >
+                <Text color="white" size="md">
+                  See brews
+                </Text>
+              </Box>
+            </Link>
           </Text>
         </Box>
       </Card>

@@ -3,7 +3,17 @@ import { Box, Image, Text, Card } from 'gestalt';
 
 export default function BrewCard({ image, title, desc, url }) {
   return (
-    <Box padding={5} margin={1} width={250}>
+    <Box
+      padding={5}
+      margin={1}
+      width={250}
+      shape="rounded"
+      dangerouslySetInlineStyle={{
+        __style: {
+          backgroundColor: '#DBFFDB'
+        }
+      }}
+    >
       <Card
         image={
           <Box width={200} height={200} marginBottom={4}>
