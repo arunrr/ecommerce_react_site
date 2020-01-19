@@ -52,6 +52,9 @@ export default class BrewsList extends Component {
   }
 
   render() {
+    const filteredBrews = this.state.brews.filter(brew =>
+      brew.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    );
     return (
       <Container>
         {/* Brews Section */}
@@ -67,7 +70,7 @@ export default class BrewsList extends Component {
         <Loader loading={this.state.loading} />
         {/* Brew list section */}
         <Box wrap display="flex" justifyContent="around">
-          {this.state.brews.map(brew => (
+          {filteredBrews.map(brew => (
             <BrewCard
               key={brew.id}
               image={`${apiUrl}${brew.image.url}`}
