@@ -4,7 +4,7 @@ import { Box, Image, Text, Card } from 'gestalt';
 
 export default function Brands({ image, title, desc, url }) {
   return (
-    <Box paddingY={4} margin={1} width={200}>
+    <Box padding={5} margin={1} width={250}>
       <Card
         image={
           <Box width={200} height={200}>

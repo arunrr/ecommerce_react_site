@@ -3,7 +3,7 @@ import { SearchField, Box } from 'gestalt';
 
 export default function SearchBox({ onChange }) {
   return (
-    <Box display="flex" justifyContent="center" marginTop={4}>
+    <Box display="flex" justifyContent="center" marginTop={4} marginBottom={5}>
       <SearchField
         placeholder="Search Brands"
         accessibilityLabel="Brand Search Field"

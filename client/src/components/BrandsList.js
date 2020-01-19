@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import Strapi from 'strapi-sdk-javascript/build/main';
-import { Box, Container, Heading } from 'gestalt';
+import { Container, Box, Heading } from 'gestalt';
 
-import Loader from './Loader';
+import Brands from './BrandCard';
 import SearchBox from './SearchBox';
-import BrewCard from './BrewCard';
+import Loader from './Loader';
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
-export default class BrewsList extends Component {
+export default class BrandsList extends Component {
   state = {
-    brand_name: '',
-    brews: [],
+    brands: [],
     searchTerm: '',
     loading: true
   };
@@ -26,53 +25,55 @@ export default class BrewsList extends Component {
       const response = await strapi.request('POST', '/graphql', {
         data: {
           query: ` query{
-              brand(id:"${this.props.match.params.brandid}"){
+              brands{
+                _id
                 name
-                brews{
-                  id
+                description
+                createdAt
+                image{
                   name
-                  description
-                  image{
-                    url
-                  }
+                  url
                 }
               }
             }
+            
+            
             `
         }
       });
-      this.setState({
-        brand_name: response.data.brand.name,
-        brews: response.data.brand.brews,
-        loading: false
-      });
+
+      this.setState({ brands: response.data.brands, loading: false });
     } catch (err) {
       console.error(err);
     }
   }
 
   render() {
+    const filteredBrands = this.state.brands.filter(brand =>
+      brand.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    );
     return (
       <Container>
-        {/* Brews Section */}
+        {/* Loading animation while fetch */}
+        <Loader loading={this.state.loading} />
+        {/* Brands Section */}
         <Box display="flex" justifyContent="center" marginBottom={2}>
-          {/* Brews Header */}
+          {/* Brands Header */}
           <Heading color="midnight" size="md">
-            {this.state.brand_name}
+            Brew Brands
           </Heading>
         </Box>
         {/* Search box Section */}
         <SearchBox onChange={this.handleChange} />
-        {/* Loader Section */}
-        <Loader loading={this.state.loading} />
-        {/* Brew list section */}
+        {/* Display Brands Section */}
         <Box wrap display="flex" justifyContent="around">
-          {this.state.brews.map(brew => (
-            <BrewCard
-              key={brew.id}
-              image={`${apiUrl}${brew.image.url}`}
-              title={brew.name}
-              desc={brew.description}
+          {filteredBrands.map(brand => (
+            <Brands
+              key={brand._id}
+              image={`${apiUrl}${brand.image.url}`}
+              title={brand.name}
+              desc={brand.description}
+              url={`/${brand._id}`}
             />
           ))}
         </Box>
