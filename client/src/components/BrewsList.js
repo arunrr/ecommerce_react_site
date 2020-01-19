@@ -32,6 +32,7 @@ export default class BrewsList extends Component {
                   id
                   name
                   description
+                  price
                   image{
                     url
                   }
@@ -76,6 +77,7 @@ export default class BrewsList extends Component {
               image={`${apiUrl}${brew.image.url}`}
               title={brew.name}
               desc={brew.description}
+              price={brew.price}
             />
           ))}
         </Box>

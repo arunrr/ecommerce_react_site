@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Image, Text, Card } from 'gestalt';
+import { Box, Image, Text, Card, Button } from 'gestalt';
 
-export default function BrewCard({ image, title, desc, url }) {
+export default function BrewCard({ image, title, desc, price }) {
   return (
     <Box
       padding={5}
@@ -36,8 +36,13 @@ export default function BrewCard({ image, title, desc, url }) {
           <Box marginBottom={2}>
             <Text size="xl">{title}</Text>
           </Box>
-          <Box marginBottom={1}>
-            <Text>{desc}</Text>
+          <Text>{desc}</Text>
+          <Box marginBottom={3}></Box>
+          <Text size="lg" weight="bold">
+            {price} $
+          </Text>
+          <Box marginTop={3}>
+            <Button color="blue" text="Add to Cart" />
           </Box>
           {/* <Text>
             <Link to={url}>See brews</Link>
