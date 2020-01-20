@@ -11,7 +11,7 @@ export default function Brands({ image, title, desc, url }) {
       shape="rounded"
       dangerouslySetInlineStyle={{
         __style: {
-          backgroundColor: '#DBFFDB'
+          backgroundColor: '#e7feff'
         }
       }}
     >

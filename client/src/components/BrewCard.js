@@ -5,12 +5,12 @@ export default function BrewCard({ image, title, desc, price }) {
   return (
     <Box
       padding={5}
-      margin={1}
+      margin={4}
       width={250}
       shape="rounded"
       dangerouslySetInlineStyle={{
         __style: {
-          backgroundColor: '#DBFFDB'
+          backgroundColor: '#e7feff'
         }
       }}
     >
