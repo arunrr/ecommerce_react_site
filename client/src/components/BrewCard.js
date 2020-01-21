@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image, Text, Card, Button } from 'gestalt';
 
-export default function BrewCard({ image, title, desc, price }) {
+export default function BrewCard({ image, title, desc, price, onAddToCart }) {
   return (
     <Box
       padding={5}
@@ -42,11 +42,8 @@ export default function BrewCard({ image, title, desc, price }) {
             {price} $
           </Text>
           <Box marginTop={3}>
-            <Button color="blue" text="Add to Cart" />
+            <Button onClick={onAddToCart} color="blue" text="Add to Cart" />
           </Box>
-          {/* <Text>
-            <Link to={url}>See brews</Link>
-          </Text> */}
         </Box>
       </Card>
     </Box>

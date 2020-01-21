@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Mask, Heading, Text } from 'gestalt';
+import { Box, Mask, Heading, Text, IconButton } from 'gestalt';
 import { Link } from 'react-router-dom';
+import { displayTotalPrice } from '../utils';
 
-export default function Cart({ cartItems }) {
+export default function Cart({ cartItems, deleteCartItem }) {
   return (
     <Mask shape="rounded" wash>
       <Box
@@ -20,9 +21,30 @@ export default function Cart({ cartItems }) {
         <Heading align="center" size="md">
           Cart
         </Heading>
-        length items selected
+        {cartItems.length} items selected
         <Text color="gray" italic></Text>
-        {/* Cart items (will add)*/}
+        {/* Cart items */}
+        {cartItems.map(item => (
+          <Box
+            key={item.id}
+            display="flex"
+            alignItems="center"
+            marginTop={2}
+            marginBottom={2}
+          >
+            <Text>
+              {item.name} x {item.quantity} -{' '}
+              {(item.price * item.quantity).toFixed(2)} $
+            </Text>
+            <IconButton
+              accessibilityLabel="Delete Item"
+              icon="cancel"
+              size="sm"
+              iconColor="red"
+              onClick={() => deleteCartItem(item.id)}
+            />
+          </Box>
+        ))}
         <Box
           display="flex"
           justifyContent="center"
@@ -34,7 +56,7 @@ export default function Cart({ cartItems }) {
               <Text color="red">Please add items to cart</Text>
             )}
           </Box>
-          <Text size="lg">Total: 4.99 $</Text>
+          <Text size="lg">Total: {displayTotalPrice(cartItems)}</Text>
           <Text>
             <Link to="/checkout">Checkout</Link>
           </Text>

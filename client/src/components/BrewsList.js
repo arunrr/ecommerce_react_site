@@ -23,6 +23,39 @@ export default class BrewsList extends Component {
     this.setState({ searchTerm: event.value });
   };
 
+  addToCart = brew => {
+    const alreadyInCart = this.state.cartItems.findIndex(
+      item => item.id === brew.id
+    );
+
+    // if product is not found in cart
+    if (alreadyInCart === -1) {
+      const updatedItems = this.state.cartItems.concat({
+        ...brew,
+        quantity: 1
+      });
+      this.setState({
+        cartItems: updatedItems
+      });
+    } else {
+      // If product is present increase the quantity of the product by 1
+      const updatedItems = [...this.state.cartItems];
+      updatedItems[alreadyInCart].quantity += 1;
+      this.setState({
+        cartItems: updatedItems
+      });
+    }
+  };
+
+  handleDeleteCartItem = ItemToDeleteId => {
+    const filteredItems = this.state.cartItems.filter(
+      item => item.id !== ItemToDeleteId
+    );
+    this.setState({
+      cartItems: filteredItems
+    });
+  };
+
   async componentDidMount() {
     try {
       const response = await strapi.request('POST', '/graphql', {
@@ -96,12 +129,16 @@ export default class BrewsList extends Component {
                   title={brew.name}
                   desc={brew.description}
                   price={brew.price}
+                  onAddToCart={() => this.addToCart(brew)}
                 />
               ))}
             </Box>
             <Box alignSelf="end" display="flex" marginTop={4}>
               {!this.state.loading ? (
-                <Cart cartItems={this.state.cartItems} />
+                <Cart
+                  cartItems={this.state.cartItems}
+                  deleteCartItem={this.handleDeleteCartItem}
+                />
               ) : null}
             </Box>
           </Box>
