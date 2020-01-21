@@ -6,6 +6,7 @@ import Loader from './Loader';
 import SearchBox from './SearchBox';
 import BrewCard from './BrewCard';
 import Cart from './Cart';
+import { setCart, getCart } from '../utils';
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
@@ -34,16 +35,22 @@ export default class BrewsList extends Component {
         ...brew,
         quantity: 1
       });
-      this.setState({
-        cartItems: updatedItems
-      });
+      this.setState(
+        {
+          cartItems: updatedItems
+        },
+        () => setCart(updatedItems)
+      );
     } else {
       // If product is present increase the quantity of the product by 1
       const updatedItems = [...this.state.cartItems];
       updatedItems[alreadyInCart].quantity += 1;
-      this.setState({
-        cartItems: updatedItems
-      });
+      this.setState(
+        {
+          cartItems: updatedItems
+        },
+        () => setCart(updatedItems)
+      );
     }
   };
 
@@ -51,9 +58,12 @@ export default class BrewsList extends Component {
     const filteredItems = this.state.cartItems.filter(
       item => item.id !== ItemToDeleteId
     );
-    this.setState({
-      cartItems: filteredItems
-    });
+    this.setState(
+      {
+        cartItems: filteredItems
+      },
+      () => setCart(filteredItems)
+    );
   };
 
   async componentDidMount() {
@@ -80,7 +90,8 @@ export default class BrewsList extends Component {
       this.setState({
         brand_name: response.data.brand.name,
         brews: response.data.brand.brews,
-        loading: false
+        loading: false,
+        cartItems: getCart()
       });
     } catch (err) {
       console.error(err);
