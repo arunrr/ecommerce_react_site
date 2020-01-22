@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import Strapi from 'strapi-sdk-javascript/build/main';
 import { Container, Box, Heading, Text, TextField, Button } from 'gestalt';
 
 import ToastMessage from './ToastMessage';
+import { setToken } from '../utils';
+
+const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const strapi = new Strapi(apiUrl);
 
 export default class SignUp extends Component {
   state = {
@@ -9,25 +14,41 @@ export default class SignUp extends Component {
     email: '',
     password: '',
     toast: false,
-    toastMessage: ''
+    toastMessage: '',
+    loading: false
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
+    const { username, email, password } = this.state;
+
     event.preventDefault();
     // if any field in form is blank
     if (this.isFormEmpty(this.state)) {
-      // Show toast message
-      this.setState({
-        toast: true,
-        toastMessage: 'Please fill in all fields'
-      });
-      // hide toast message after 5 sec
-      setTimeout(() => this.setState({ toast: false, toastMessage: '' }), 5000);
+      this.showToast('Please fill in all fields');
       return;
     }
-    console.log('submitted');
+
+    // Register user
+    try {
+      // disable submit button while form is submitted
+      this.setState({ loading: true });
+      // register the user data to backend
+      const response = await strapi.register(username, email, password);
+      // enable submit button if user registered successfully
+      this.setState({ loading: false });
+      // store jwt to localStorage
+      setToken(response.jwt);
+      // redirect to homepage
+      this.redirectTo('/');
+    } catch (err) {
+      this.showToast(err.message);
+      this.setState({
+        loading: false
+      });
+    }
   };
 
+  // Change state when form is filled
   handleChange = ({ event, value }) => {
     event.persist();
     this.setState({
@@ -35,11 +56,28 @@ export default class SignUp extends Component {
     });
   };
 
+  // Show toast with given message
+  showToast = message => {
+    // Show toast message
+    this.setState({
+      toast: true,
+      toastMessage: message
+    });
+    // hide toast message after 5 sec
+    setTimeout(() => this.setState({ toast: false, toastMessage: '' }), 5000);
+  };
+
+  // check if any of the fields are empty
   isFormEmpty = ({ username, email, password }) => {
     return !username || !email || !password;
   };
 
+  // Redirect to a given path
+  redirectTo = path => this.props.history.push(path);
+
   render() {
+    const { toast, toastMessage, loading } = this.state;
+
     return (
       <Container>
         <Box
@@ -108,9 +146,16 @@ export default class SignUp extends Component {
               onChange={this.handleChange}
             />
             {/* Submit button */}
-            <Button inline color="blue" type="submit" text="Submit" />
+            <Button
+              disabled={loading}
+              inline
+              color="blue"
+              type="submit"
+              text="Submit"
+            />
           </form>
         </Box>
+        {/* Toast message section */}
         <Box
           position="fixed"
           dangerouslySetInlineStyle={{
@@ -121,10 +166,7 @@ export default class SignUp extends Component {
             }
           }}
         >
-          <ToastMessage
-            message={this.state.toastMessage}
-            show={this.state.toast}
-          />
+          <ToastMessage message={toastMessage} show={toast} />
         </Box>
       </Container>
     );
