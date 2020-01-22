@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 import 'gestalt/dist/gestalt.css';
+
 import App from './components/App';
 import NavBar from './components/NavBar';
 import SignUp from './components/SignUp';
@@ -10,18 +16,53 @@ import LogOut from './components/LogOut';
 import * as serviceWorker from './serviceWorker';
 import BrewsList from './components/BrewsList';
 import Checkout from './components/Checkout';
+import { getToken } from './utils';
+
+const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+  return (
+    // restricted = false meaning public route
+    // restricted = true meaning restricted route
+    <Route
+      {...rest}
+      render={props =>
+        getToken() && restricted ? (
+          <Redirect to="/" />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  );
+};
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    // Show the component only when the user is logged in
+    // Otherwise, redirect the user to /signin page
+    <Route
+      {...rest}
+      render={props =>
+        getToken() ? <Component {...props} /> : <Redirect to="/signin" />
+      }
+    />
+  );
+};
 
 const Root = () => {
   return (
     <Router>
       <NavBar />
       <Switch>
-        <Route component={App} exact path="/" />
-        <Route component={SignUp} path="/signup" />
-        <Route component={SignIn} path="/signin" />
-        <Route component={Checkout} path="/checkout" />
+        <PublicRoute restricted={false} component={App} exact path="/" />
+        <PublicRoute restricted={true} component={SignUp} path="/signup" />
+        <PublicRoute restricted={true} component={SignIn} path="/signin" />
+        <PrivateRoute component={Checkout} path="/checkout" />
         <Route component={LogOut} path="/logout" />
-        <Route component={BrewsList} path="/:brandid" />
+        <PublicRoute
+          restricted={false}
+          component={BrewsList}
+          path="/:brandid"
+        />
       </Switch>
     </Router>
   );
