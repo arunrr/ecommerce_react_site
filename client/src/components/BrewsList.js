@@ -20,11 +20,14 @@ export default class BrewsList extends Component {
     loading: true
   };
 
+  // Change state while searching
   handleChange = event => {
     this.setState({ searchTerm: event.value });
   };
 
+  // Handling adding items to cart
   addToCart = brew => {
+    // check if item is already added to cart
     const alreadyInCart = this.state.cartItems.findIndex(
       item => item.id === brew.id
     );
@@ -54,6 +57,7 @@ export default class BrewsList extends Component {
     }
   };
 
+  // Handling deleting items from cart
   handleDeleteCartItem = ItemToDeleteId => {
     const filteredItems = this.state.cartItems.filter(
       item => item.id !== ItemToDeleteId
@@ -67,6 +71,7 @@ export default class BrewsList extends Component {
   };
 
   async componentDidMount() {
+    // Get list of brews from a specific brand from backend
     try {
       const response = await strapi.request('POST', '/graphql', {
         data: {
@@ -99,9 +104,13 @@ export default class BrewsList extends Component {
   }
 
   render() {
-    const filteredBrews = this.state.brews.filter(brew =>
-      brew.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    const { brand_name, brews, loading, cartItems, searchTerm } = this.state;
+
+    // filter Brews list based on search term
+    const filteredBrews = brews.filter(brew =>
+      brew.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     return (
       <Box
         display="flex"
@@ -114,13 +123,13 @@ export default class BrewsList extends Component {
           {/* Brews Header */}
           <Box margin={2}>
             <Heading color="midnight" size="md">
-              {this.state.brand_name}
+              {brand_name}
             </Heading>
           </Box>
           {/* Search box Section */}
           <SearchBox onChange={this.handleChange} holder="Brews" />
           {/* Loader Section */}
-          <Loader loading={this.state.loading} />
+          <Loader loading={loading} />
           {/* Brew list section */}
           <Box
             display="flex"
@@ -145,9 +154,9 @@ export default class BrewsList extends Component {
               ))}
             </Box>
             <Box alignSelf="end" display="flex" marginTop={4}>
-              {!this.state.loading ? (
+              {!loading ? (
                 <Cart
-                  cartItems={this.state.cartItems}
+                  cartItems={cartItems}
                   deleteCartItem={this.handleDeleteCartItem}
                 />
               ) : null}

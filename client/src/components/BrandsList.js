@@ -16,11 +16,13 @@ export default class BrandsList extends Component {
     loading: true
   };
 
+  // change state while searching
   handleChange = event => {
     this.setState({ searchTerm: event.value });
   };
 
   async componentDidMount() {
+    // Get list of brands from backend
     try {
       const response = await strapi.request('POST', '/graphql', {
         data: {
@@ -49,13 +51,17 @@ export default class BrandsList extends Component {
   }
 
   render() {
-    const filteredBrands = this.state.brands.filter(brand =>
-      brand.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    const { searchTerm, brands, loading } = this.state;
+
+    // filter brands list based on search term
+    const filteredBrands = brands.filter(brand =>
+      brand.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     return (
       <Container>
         {/* Loading animation while fetch */}
-        <Loader loading={this.state.loading} />
+        <Loader loading={loading} />
         {/* Brands Section */}
         <Box display="flex" justifyContent="center" marginBottom={2}>
           {/* Brands Header */}
