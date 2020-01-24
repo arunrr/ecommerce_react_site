@@ -117,22 +117,26 @@ export default class SignIn extends Component {
               </Box>
             </Box>
             {/* Username Input */}
-            <TextField
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Enter Username"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter Username"
+                onChange={this.handleChange}
+              />
+            </Box>
 
             {/* Password Input */}
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter password"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter password"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Sign In button */}
             <Button
               disabled={loading}

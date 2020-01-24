@@ -119,41 +119,51 @@ class Checkout extends Component {
             onSubmit={this.handleSubmit}
           >
             {/* Address Input */}
-            <TextField
-              id="address"
-              name="address"
-              type="text"
-              placeholder="Enter Shipping Address"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="address"
+                name="address"
+                type="text"
+                placeholder="Enter Shipping Address"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Postal Code Input */}
-            <TextField
-              id="postalCode"
-              name="postalCode"
-              type="number"
-              placeholder="Enter Postal Code"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="postalCode"
+                name="postalCode"
+                type="number"
+                placeholder="Enter Postal Code"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* City Input */}
-            <TextField
-              id="city"
-              name="city"
-              type="text"
-              placeholder="City of Residence"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="city"
+                name="city"
+                type="text"
+                placeholder="City of Residence"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Confirm Email Input */}
-            <TextField
-              id="confirmEmail"
-              name="confirmEmail"
-              type="email"
-              placeholder="Enter registered email address"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="confirmEmail"
+                name="confirmEmail"
+                type="email"
+                placeholder="Enter registered email address"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Checkout button */}
-            <button id="stripe__button" type="submit">
-              Checkout
-            </button>
+            <Box>
+              <button id="stripe__button" type="submit">
+                Checkout
+              </button>
+            </Box>
           </form>
         </Box>
         {/* Toast message section */}

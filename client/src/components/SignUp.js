@@ -122,29 +122,35 @@ export default class SignUp extends Component {
               </Text>
             </Box>
             {/* Username Input */}
-            <TextField
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Enter Username"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter Username"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Email Input */}
-            <TextField
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter Email"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter Email"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Password Input */}
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter password"
-              onChange={this.handleChange}
-            />
+            <Box marginBottom={3} width={500}>
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter password"
+                onChange={this.handleChange}
+              />
+            </Box>
             {/* Submit button */}
             <Button
               disabled={loading}
