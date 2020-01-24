@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Box, Heading, TextField } from 'gestalt';
+import { Container, Box, Heading, TextField, Text } from 'gestalt';
 
+import { getCart, displayTotalPrice } from '../utils';
 import ToastMessage from './ToastMessage';
 
 class Checkout extends Component {
   state = {
+    cartItems: [],
     address: '',
     postalCode: '',
     confirmEmail: '',
@@ -46,28 +48,67 @@ class Checkout extends Component {
     return !address || !confirmEmail || !postalCode || !city;
   };
 
+  componentDidMount() {
+    // get carts  items from local storage
+    this.setState({
+      cartItems: getCart()
+    });
+  }
+
   render() {
-    const { toast, toastMessage } = this.state;
+    const { toast, toastMessage, cartItems } = this.state;
 
     return (
       <Container>
         <Box
-          height={350}
           margin={4}
           padding={8}
           display="flex"
           shape="rounded"
           justifyContent="center"
-          position="fixed"
+          alignItems="center"
+          direction="column"
+          // position="fixed"
           dangerouslySetInlineStyle={{
             __style: {
-              backgroundColor: '#e7feff',
-              left: '50%',
-              top: '25%',
-              transform: 'translate(-50%)'
+              backgroundColor: '#e7feff'
             }
           }}
         >
+          {/* Checkout form heading */}
+
+          <Box>
+            <Heading color="midnight">Checkout</Heading>
+          </Box>
+
+          {/* Cart items section */}
+
+          <Box
+            display="flex"
+            marginBottom={4}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box margin={2}>
+              <Text italics color="orchid" size="md">
+                {cartItems.length} items to checkout
+              </Text>
+            </Box>
+            <Box>
+              {cartItems.map(item => (
+                <Box key={item.id} margin={4}>
+                  <Text>
+                    {` ${item.name} x ${item.quantity} --> 
+                    ${item.price * item.quantity} $`}
+                  </Text>
+                </Box>
+              ))}
+            </Box>
+            <Text size="lg" color="watermelon">
+              Total : {displayTotalPrice(cartItems)}
+            </Text>
+          </Box>
           {/* Checkout form */}
           <form
             style={{
@@ -77,17 +118,6 @@ class Checkout extends Component {
             }}
             onSubmit={this.handleSubmit}
           >
-            {/* Checkout form heading */}
-            <Box
-              marginBottom={2}
-              display="flex"
-              direction="column"
-              alignItems="center"
-            >
-              <Box marginBottom={2}>
-                <Heading color="midnight">Checkout</Heading>
-              </Box>
-            </Box>
             {/* Address Input */}
             <TextField
               id="address"
