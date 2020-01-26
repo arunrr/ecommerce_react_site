@@ -1,5 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Box, Heading, TextField, Text } from 'gestalt';
+import {
+  Container,
+  Box,
+  Heading,
+  TextField,
+  Text,
+  Modal,
+  Button,
+  Spinner
+} from 'gestalt';
 
 import { getCart, displayTotalPrice } from '../utils';
 import ToastMessage from './ToastMessage';
@@ -12,17 +21,24 @@ class Checkout extends Component {
     confirmEmail: '',
     city: '',
     toast: false,
-    toastMessage: ''
+    toastMessage: '',
+    orderProcessing: false,
+    modal: false
   };
 
-  handleSubmit = async event => {
+  closeModal = () => this.setState({ modal: false });
+
+  handleConfirmOrder = async event => {
     event.preventDefault();
     // if any field in form is blank
     if (this.isFormEmpty(this.state)) {
       this.showToast('Please fill in all fields');
       return;
     }
+    this.setState({ modal: true });
   };
+
+  handleSubmitOrder = () => {};
 
   // Change state when form is filled
   handleChange = ({ event, value }) => {
@@ -56,7 +72,13 @@ class Checkout extends Component {
   }
 
   render() {
-    const { toast, toastMessage, cartItems } = this.state;
+    const {
+      toast,
+      toastMessage,
+      cartItems,
+      orderProcessing,
+      modal
+    } = this.state;
 
     return (
       <Container>
@@ -106,66 +128,68 @@ class Checkout extends Component {
                     </Box>
                   ))}
                 </Box>
-                <Text size="lg" color="watermelon">
+                <Text size="lg" color="watermelon" weight="bold">
                   Total : {displayTotalPrice(cartItems)}
                 </Text>
               </Box>
               {/* Checkout form */}
-              <form
-                style={{
-                  display: 'inlineBlock',
-                  maxWidth: 450,
-                  textAlign: 'center'
-                }}
-                onSubmit={this.handleSubmit}
-              >
-                {/* Address Input */}
-                <Box marginBottom={3} width={500}>
-                  <TextField
-                    id="address"
-                    name="address"
-                    type="text"
-                    placeholder="Enter Shipping Address"
-                    onChange={this.handleChange}
-                  />
-                </Box>
-                {/* Postal Code Input */}
-                <Box marginBottom={3} width={500}>
-                  <TextField
-                    id="postalCode"
-                    name="postalCode"
-                    type="number"
-                    placeholder="Enter Postal Code"
-                    onChange={this.handleChange}
-                  />
-                </Box>
-                {/* City Input */}
-                <Box marginBottom={3} width={500}>
-                  <TextField
-                    id="city"
-                    name="city"
-                    type="text"
-                    placeholder="City of Residence"
-                    onChange={this.handleChange}
-                  />
-                </Box>
-                {/* Confirm Email Input */}
-                <Box marginBottom={3} width={500}>
-                  <TextField
-                    id="confirmEmail"
-                    name="confirmEmail"
-                    type="email"
-                    placeholder="Enter registered email address"
-                    onChange={this.handleChange}
-                  />
-                </Box>
-                {/* Checkout button */}
-                <Box>
-                  <button id="stripe__button" type="submit">
-                    Checkout
-                  </button>
-                </Box>
-              </form>
+              <Box width={400}>
+                <form
+                  styled={{
+                    display: 'inlineBlock',
+                    maxWidth: 450,
+                    textAlign: 'center'
+                  }}
+                  onSubmit={this.handleConfirmOrder}
+                >
+                  {/* Address Input */}
+                  <Box>
+                    <TextField
+                      id="address"
+                      name="address"
+                      type="text"
+                      placeholder="Enter Shipping Address"
+                      onChange={this.handleChange}
+                    />
+                  </Box>
+                  {/* Postal Code Input */}
+                  <Box>
+                    <TextField
+                      id="postalCode"
+                      name="postalCode"
+                      type="number"
+                      placeholder="Enter Postal Code"
+                      onChange={this.handleChange}
+                    />
+                  </Box>
+                  {/* City Input */}
+                  <Box>
+                    <TextField
+                      id="city"
+                      name="city"
+                      type="text"
+                      placeholder="City of Residence"
+                      onChange={this.handleChange}
+                    />
+                  </Box>
+                  {/* Confirm Email Input */}
+                  <Box>
+                    <TextField
+                      id="confirmEmail"
+                      name="confirmEmail"
+                      type="email"
+                      placeholder="Enter registered email address"
+                      onChange={this.handleChange}
+                    />
+                  </Box>
+                  {/* Checkout button */}
+                  <Box>
+                    <button id="stripe__button" type="submit">
+                      Checkout
+                    </button>
+                  </Box>
+                </form>
+              </Box>
             </Fragment>
           ) : (
             <Box margin={2}>
@@ -175,6 +199,15 @@ class Checkout extends Component {
             </Box>
           )}
         </Box>
+        {/* Order confirmation modal */}
+        {modal && (
+          <ConfirmOrderModal
+            handleSubmitOrder={this.handleSubmitOrder}
+            orderProcessing={orderProcessing}
+            cartItems={cartItems}
+            closeModal={this.closeModal}
+          />
+        )}
 
         {/* Toast message section */}
         <Box
@@ -193,5 +226,104 @@ class Checkout extends Component {
     );
   }
 }
+
+// Confirm order modal component
+const ConfirmOrderModal = ({
+  orderProcessing,
+  handleSubmitOrder,
+  cartItems,
+  closeModal
+}) => (
+  <Modal
+    accessibilityCloseLabel="close"
+    accessibilityModalLabel="Confirm order modal"
+    heading={
+      <Box
+        justifyContent="center"
+        alignItems="center"
+        direction="column"
+        display="flex"
+        paddingY={2}
+      >
+        <Heading size="sm">Confirm Your Order</Heading>
+      </Box>
+    }
+    onDismiss={closeModal}
+    footer={
+      <Box display="flex" justifyContent="center">
+        <Box padding={2}>
+          <Button
+            text="Checkout"
+            size="lg"
+            color="blue"
+            disabled={orderProcessing}
+            onClick={handleSubmitOrder}
+          />
+        </Box>
+        <Box padding={2}>
+          <Button
+            text="Cancel"
+            size="lg"
+            color="red"
+            disabled={orderProcessing}
+            onClick={closeModal}
+          />
+        </Box>
+      </Box>
+    }
+    size="md"
+    role="alertdialog"
+  >
+    {/* Order Summary */}
+    {!orderProcessing && (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        direction="column"
+        color="lightWash"
+        padding={2}
+      >
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          direction="column"
+        >
+          {cartItems.map(item => (
+            <Box key={item.id} margin={2} alignSelf="start">
+              <Text size="lg" color="watermelon">
+                {item.name} x {item.quantity} - {item.quantity * item.price} $
+              </Text>
+            </Box>
+          ))}
+        </Box>
+
+        <Box paddingY={2} MarginTop={2}>
+          <Text size="lg" weight="bold">
+            Total : {displayTotalPrice(cartItems)}
+          </Text>
+        </Box>
+      </Box>
+    )}
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      direction="column"
+      margin={5}
+    >
+      <Spinner
+        show={orderProcessing}
+        accessibilityLabel="Order processing spinner"
+      />
+      <Box margin={4}>
+        <Text italics weight="bold" size="sm">
+          Processing Order...
+        </Text>
+      </Box>
+    </Box>
+  </Modal>
+);
 
 export default Checkout;

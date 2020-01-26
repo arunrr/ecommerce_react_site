@@ -122,7 +122,7 @@ export default class SignUp extends Component {
               </Text>
             </Box>
             {/* Username Input */}
-            <Box marginBottom={3} width={500}>
+            <Box>
               <TextField
                 id="username"
                 name="username"
@@ -132,7 +132,7 @@ export default class SignUp extends Component {
               />
             </Box>
             {/* Email Input */}
-            <Box marginBottom={3} width={500}>
+            <Box>
               <TextField
                 id="email"
                 name="email"
@@ -142,7 +142,7 @@ export default class SignUp extends Component {
               />
             </Box>
             {/* Password Input */}
-            <Box marginBottom={3} width={500}>
+            <Box>
               <TextField
                 id="password"
                 name="password"

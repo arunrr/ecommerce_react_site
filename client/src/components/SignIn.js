@@ -112,12 +112,12 @@ export default class SignIn extends Component {
               direction="column"
               alignItems="center"
             >
-              <Box marginBottom={2}>
+              <Box>
                 <Heading color="midnight">Welcome back!</Heading>
               </Box>
             </Box>
             {/* Username Input */}
-            <Box marginBottom={3} width={500}>
+            <Box>
               <TextField
                 id="username"
                 name="username"
@@ -128,7 +128,7 @@ export default class SignIn extends Component {
             </Box>
 
             {/* Password Input */}
-            <Box marginBottom={3} width={500}>
+            <Box>
               <TextField
                 id="password"
                 name="password"
