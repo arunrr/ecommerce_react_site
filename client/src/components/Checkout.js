@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 // prettier-ignore
-import {Container, Box, Heading, TextField, Text, Modal, Button, Spinner, Checkbox } from 'gestalt';
+import {Container, Box, Heading, TextField, Text, Modal, Button, Spinner} from 'gestalt';
 // prettier-ignore
-import { Elements, StripeProvider, CardElement, InjectStripe } from 'react-stripe-elements';
+import { Elements, StripeProvider, CardElement, injectStripe } from 'react-stripe-elements';
 
 import { getCart, displayTotalPrice } from '../utils';
 import ToastMessage from './ToastMessage';
@@ -182,7 +182,11 @@ class _CheckoutForm extends Component {
                     onReady={input => input.focus()}
                   />
                   {/* Checkout button */}
-                  <Box>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
                     <button id="stripe__button" type="submit">
                       Checkout
                     </button>
@@ -325,12 +329,12 @@ const ConfirmOrderModal = ({
   </Modal>
 );
 
-const CheckoutForm = InjectStripe(_CheckoutForm);
+const CheckoutForm = injectStripe(_CheckoutForm);
 
 const Checkout = () => (
-  <StripeProvider apiKey="">
+  <StripeProvider apiKey="pk_test_v8FridphUyEU5A9GsiT9FNWu003wq0PByO">
     <Elements>
-      <Checkbox />
+      <CheckoutForm />
     </Elements>
   </StripeProvider>
 );
