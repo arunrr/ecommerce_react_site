@@ -81,7 +81,7 @@ export default class SignUp extends Component {
     return (
       <Container>
         <Box
-          height={350}
+          height={450}
           margin={4}
           padding={8}
           display="flex"
@@ -91,6 +91,7 @@ export default class SignUp extends Component {
           dangerouslySetInlineStyle={{
             __style: {
               backgroundColor: '#e7feff',
+              minWidth: '70%',
               left: '50%',
               top: '25%',
               transform: 'translate(-50%)'

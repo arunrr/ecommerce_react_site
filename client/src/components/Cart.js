@@ -58,7 +58,9 @@ export default function Cart({ cartItems, deleteCartItem }) {
           </Box>
           <Text size="lg">Total: {displayTotalPrice(cartItems)}</Text>
           <Text>
-            <Link to="/checkout">Checkout</Link>
+            <Link to="/checkout">
+              <div className="cart-checkout">Checkout</div>
+            </Link>
           </Text>
         </Box>
       </Box>

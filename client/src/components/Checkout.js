@@ -172,7 +172,14 @@ class _CheckoutForm extends Component {
                 </Text>
               </Box>
               {/* Checkout form */}
-              <Box width={400}>
+              <Box
+                maxWidth={850}
+                dangerouslySetInlineStyle={{
+                  __style: {
+                    minWidth: '70%'
+                  }
+                }}
+              >
                 <form
                   styled={{
                     display: 'inlineBlock',
@@ -292,6 +299,7 @@ const ConfirmOrderModal = ({
         direction="column"
         display="flex"
         paddingY={2}
+        MarginTop={2}
       >
         <Heading size="sm">Confirm Your Order</Heading>
       </Box>
@@ -370,7 +378,12 @@ const ConfirmOrderModal = ({
         show={orderProcessing}
         accessibilityLabel="Order processing spinner"
       />
-      <Box margin={4}>
+      <Box
+        margin={4}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
         <Text italics weight="bold" size="sm">
           Processing Order...
         </Text>

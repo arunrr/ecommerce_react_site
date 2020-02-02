@@ -20,8 +20,10 @@ a:hover {
 }
 
 form input {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
   width: 150%;
+  border: 0 !important;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 #stripe__button {
@@ -62,7 +64,7 @@ form input {
   font-family: monospace;
   box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
     rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-  border: 0;
+  border: none;
   outline: 0;
   border-radius: 4px;
   background: white;
@@ -72,4 +74,46 @@ form input {
   box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
     rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
   transition: all 150ms ease;
+}
+
+.form-width {
+  width: 400px;
+}
+
+.cart-checkout {
+  border: 1px solid palevioletred;
+  background-color: palevioletred;
+  cursor: pointer;
+  color: #f6f9fc;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+/* Media queries */
+
+@media (max-width: 900px) {
+  h3 {
+    font-size: 38px !important;
+  }
+}
+
+@media (max-width: 740px) {
+  h3 {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav-title {
+    display: none;
+  }
+  h3 {
+    font-size: 20px !important;
+    margin: 10px !important;
+  }
+  h4 {
+    font-size: 20px !important;
+  }
 }

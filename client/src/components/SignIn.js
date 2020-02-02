@@ -80,16 +80,19 @@ export default class SignIn extends Component {
     return (
       <Container>
         <Box
-          height={350}
+          height={450}
+          className="form-container"
           margin={4}
           padding={8}
           display="flex"
           shape="rounded"
           justifyContent="center"
+          alignItems="center"
           position="fixed"
           dangerouslySetInlineStyle={{
             __style: {
               backgroundColor: '#e7feff',
+              minWidth: '70%',
               left: '50%',
               top: '25%',
               transform: 'translate(-50%)'
@@ -112,7 +115,7 @@ export default class SignIn extends Component {
               direction="column"
               alignItems="center"
             >
-              <Box>
+              <Box marginBottom={2}>
                 <Heading color="midnight">Welcome back!</Heading>
               </Box>
             </Box>

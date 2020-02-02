@@ -50,9 +50,11 @@ const AuthNavbar = ({ handleSignOut }) => (
             src="./icons/logo.svg"
           ></Image>
         </Box>
-        <Heading size="xs" color="orange">
-          BrewLaLa
-        </Heading>
+        <div className="nav-title">
+          <Heading size="xs" color="orange">
+            BrewLaLa
+          </Heading>
+        </div>
       </Box>
     </NavLink>
 
@@ -96,9 +98,11 @@ const UnAuthNavBar = () => (
             src="./icons/logo.svg"
           ></Image>
         </Box>
-        <Heading size="xs" color="orange">
-          BrewLaLa
-        </Heading>
+        <div className="nav-title">
+          <Heading size="xs" color="orange">
+            BrewLaLa
+          </Heading>
+        </div>
       </Box>
     </NavLink>
 
