@@ -3,9 +3,19 @@ import React, { Component, Fragment } from 'react';
 import {Container, Box, Heading, TextField, Text, Modal, Button, Spinner} from 'gestalt';
 // prettier-ignore
 import { Elements, StripeProvider, CardElement, injectStripe } from 'react-stripe-elements';
+import Strapi from 'strapi-sdk-javascript/build/main';
+import { withRouter } from 'react-router-dom';
 
-import { getCart, displayTotalPrice } from '../utils';
+import {
+  getCart,
+  clearCart,
+  displayTotalPrice,
+  calculateAmount
+} from '../utils';
 import ToastMessage from './ToastMessage';
+
+const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const strapi = new Strapi(apiUrl);
 
 class _CheckoutForm extends Component {
   state = {
@@ -32,7 +42,33 @@ class _CheckoutForm extends Component {
     this.setState({ modal: true });
   };
 
-  handleSubmitOrder = () => {};
+  handleSubmitOrder = async () => {
+    const { cartItems, city, postalCode, address } = this.state;
+
+    const amount = calculateAmount(cartItems);
+
+    // Process order
+    this.setState({ orderProcessing: true });
+    let token;
+    try {
+      const response = await this.props.stripe.createToken();
+      token = response.token.id;
+      await strapi.createEntry('orders', {
+        amount,
+        brews: cartItems,
+        city,
+        postalCode,
+        address,
+        token
+      });
+      this.setState({ orderProcessing: false, modal: false });
+      clearCart();
+      this.showToast('Your order has been successfully submitted', true);
+    } catch (err) {
+      this.setState({ orderProcessing: false, modal: false });
+      this.showToast(err.message);
+    }
+  };
 
   // Change state when form is filled
   handleChange = ({ event, value }) => {
@@ -43,14 +79,23 @@ class _CheckoutForm extends Component {
   };
 
   // Show toast with given message
-  showToast = message => {
+  showToast = (message, redirect = false) => {
     // Show toast message
     this.setState({
       toast: true,
       toastMessage: message
     });
+
     // hide toast message after 5 sec
-    setTimeout(() => this.setState({ toast: false, toastMessage: '' }), 5000);
+    setTimeout(
+      () =>
+        this.setState(
+          { toast: false, toastMessage: '' },
+          // if true is passed to redirect argument then redirect to homepage
+          () => redirect && this.props.history.push('/')
+        ),
+      5000
+    );
   };
 
   // check if any of the fields are empty
@@ -315,6 +360,11 @@ const ConfirmOrderModal = ({
       alignItems="center"
       direction="column"
       margin={5}
+      dangerouslySetInlineStyle={{
+        __style: {
+          display: orderProcessing ? 'block' : 'none'
+        }
+      }}
     >
       <Spinner
         show={orderProcessing}
@@ -329,7 +379,7 @@ const ConfirmOrderModal = ({
   </Modal>
 );
 
-const CheckoutForm = injectStripe(_CheckoutForm);
+const CheckoutForm = withRouter(injectStripe(_CheckoutForm));
 
 const Checkout = () => (
   <StripeProvider apiKey="pk_test_v8FridphUyEU5A9GsiT9FNWu003wq0PByO">
