@@ -17,5 +17,5 @@ An Online Brew shopping web app based on React JS.
 ## Live server
 
 ```
-https://strapi-brewlala-server.herokuapp.com
+[Click Here](https://strapi-brewlala-server.herokuapp.com)
 ```
