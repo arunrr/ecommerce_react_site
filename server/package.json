@@ -2,7 +2,7 @@
   "name": "server",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application.",
+  "description": "A Strapi BrewLaLa server.",
   "main": "./server.js",
   "scripts": {
     "setup": "cd admin && npm run setup",
@@ -19,6 +19,7 @@
     "eslint-plugin-react": "^7.7.0"
   },
   "dependencies": {
+    "knex": "^0.20.8",
     "lodash": "^4.17.5",
     "strapi": "3.0.0-alpha.26.2",
     "strapi-hook-mongoose": "3.0.0-alpha.26.2",
