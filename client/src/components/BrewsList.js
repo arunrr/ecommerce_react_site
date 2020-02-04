@@ -8,7 +8,7 @@ import BrewCard from './BrewCard';
 import Cart from './Cart';
 import { setCart, getCart } from '../utils';
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 export default class BrewsList extends Component {
@@ -145,7 +145,7 @@ export default class BrewsList extends Component {
               {filteredBrews.map(brew => (
                 <BrewCard
                   key={brew.id}
-                  image={`${apiUrl}${brew.image.url}`}
+                  image={`${brew.image.url}`}
                   title={brew.name}
                   desc={brew.description}
                   price={brew.price}

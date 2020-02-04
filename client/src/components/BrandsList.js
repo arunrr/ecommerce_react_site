@@ -6,7 +6,7 @@ import Brands from './BrandCard';
 import SearchBox from './SearchBox';
 import Loader from './Loader';
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 export default class BrandsList extends Component {
@@ -76,7 +76,7 @@ export default class BrandsList extends Component {
           {filteredBrands.map(brand => (
             <Brands
               key={brand._id}
-              image={`${apiUrl}${brand.image.url}`}
+              image={`${brand.image.url}`}
               title={brand.name}
               desc={brand.description}
               url={`/${brand._id}`}
