@@ -53,15 +53,15 @@ const Root = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <NavBar />
       <Switch>
-        <PublicRoute restricted={false} component={App} exact path="/" />
-        <PublicRoute restricted={true} component={SignUp} path="/signup" />
-        <PublicRoute restricted={true} component={SignIn} path="/signin" />
-        <PrivateRoute component={Checkout} path="/checkout" />
-        <Route component={LogOut} path="/logout" />
+        <PublicRoute restricted={false} component={App} exact path={`/`} />
+        <PublicRoute restricted={true} component={SignUp} path={`/signup`} />
+        <PublicRoute restricted={true} component={SignIn} path={`/signin`} />
+        <PrivateRoute component={Checkout} path={`/checkout`} />
+        <Route component={LogOut} path={`/logout`} />
         <PublicRoute
           restricted={false}
           component={BrewsList}
-          path="/:brandid"
+          path={`/:brandid`}
         />
       </Switch>
     </Router>
