@@ -5,7 +5,7 @@ import { Container, Box, Heading, Text, TextField, Button } from 'gestalt';
 import ToastMessage from './ToastMessage';
 import { setToken } from '../utils';
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 export default class SignUp extends Component {
