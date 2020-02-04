@@ -50,30 +50,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 const Root = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <NavBar />
       <Switch>
-        <PublicRoute
-          restricted={false}
-          component={App}
-          exact
-          path={`${process.env.PUBLIC_URL}`}
-        />
-        <PublicRoute
-          restricted={true}
-          component={SignUp}
-          path={`${process.env.PUBLIC_URL}/signup`}
-        />
-        <PublicRoute
-          restricted={true}
-          component={SignIn}
-          path={`${process.env.PUBLIC_URL}/signin`}
-        />
-        <PrivateRoute
-          component={Checkout}
-          path={`${process.env.PUBLIC_URL}/checkout`}
-        />
-        <Route component={LogOut} path={`${process.env.PUBLIC_URL}/logout`} />
+        <PublicRoute restricted={false} component={App} exact path="/" />
+        <PublicRoute restricted={true} component={SignUp} path="/signup" />
+        <PublicRoute restricted={true} component={SignIn} path="/signin" />
+        <PrivateRoute component={Checkout} path="/checkout" />
+        <Route component={LogOut} path="/logout" />
         <PublicRoute
           restricted={false}
           component={BrewsList}
