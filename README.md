@@ -11,7 +11,21 @@ An Online Brew shopping web app based on React JS.
 
 ## Screenshots
 
+### Home Page
+
 ![Home Page](./images/screenshot-homepage-ad.PNG)
+
+### Cart Page
+
+![Cart Page](./images/screenshot-cart.PNG)
+
+### Sign Up Page
+
+![SignUp Page](./images/screenshot-signup.PNG)
+
+### Sign In Page
+
+![SignIn Page](./images/screenshot-signin.PNG)
 
 ## Live server
 
