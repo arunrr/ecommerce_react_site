@@ -1,18 +1,17 @@
-# ecommerce_react_site
+# E-commerce Webapp
 
 An Online Brew shopping web app based on React JS.
 
 ## Main Dependencies
 
-```
-1) Strapi --> Server
+> - **Strapi** --> _Server_
+> - **React** --> _Client_
+> - **MongoDB** --> _Database_
+> - **Stripe** --> _Payment API_
 
-2) React --> Client
+## Screenshots
 
-3) MongoDB --> Database
-
-4) Stripe --> Payment API
-```
+![Home Page](./images/screenshot-homepage-ad.PNG)
 
 ## Live server
 
